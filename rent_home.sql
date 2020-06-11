@@ -19,9 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Cấu trúc bảng cho bảng `address`
 --
-DROP DATABASE IF EXISTS renting;
-CREATE DATABASE IF NOT EXISTS renting;
-USE renting;
+DROP DATABASE IF EXISTS rent_home;
+CREATE DATABASE IF NOT EXISTS rent_home;
+USE rent_home;
 
 
 
