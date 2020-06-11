@@ -1163,7 +1163,6 @@ insert into vote(id_vote,review,voted_date,id_home,star) values
 (28,"Khong an ninh.","2019-8-19",78,3),
 (29,"Gia tot. Dien nuoc re.","2020-3-27",85,5);
 
-desc renter_vote;
 insert into renter_vote(id_vote,id_renter,visited_date) values
 (1,61,"2020-2-21"),
 (2,38,"2019-7-26"),
@@ -1195,7 +1194,6 @@ insert into renter_vote(id_vote,id_renter,visited_date) values
 (28,10,"2019-9-23"),
 (29,27,"2019-10-12");
 
-desc home_detail;
 insert into home_detail(id_detail,id_home) values
 (24,1),
 (11,2),
