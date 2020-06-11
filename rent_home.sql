@@ -1186,7 +1186,9 @@ insert into vote(id_vote,review,voted_date,id_home,star) values
 (26,"Gia re. O thoai mai, co chia khoa rieng.","2020-8-1",94,5),
 (27,"Gan trung tam va rong rai, thoang mat, khong chung chu.","2019-7-22",47,5),
 (28,"Khong an ninh.","2019-8-19",78,3),
-(29,"Gia tot. Dien nuoc re.","2020-3-27",85,5);
+(29,"Gia tot. Dien nuoc re.","2020-3-27",85,5),
+(30,"Nha dep","2019-7-23",85,4),
+(31,"Nha kha sach se","2019-3-23",85,4);
 
 insert into renter_vote(id_vote,id_renter,visited_date) values
 (1,61,"2020-2-21"),
@@ -1217,7 +1219,9 @@ insert into renter_vote(id_vote,id_renter,visited_date) values
 (26,14,"2019-6-24"),
 (27,66,"2019-12-11"),
 (28,10,"2019-9-23"),
-(29,27,"2019-10-12");
+(29,27,"2019-10-12"),
+(30,36,"2019-7-22"),
+(31,99,"2019-3-18");
 
 insert into home_detail(id_detail,id_home) values
 (24,1),
