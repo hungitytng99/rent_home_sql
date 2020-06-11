@@ -23,6 +23,28 @@ DROP DATABASE IF EXISTS renting;
 CREATE DATABASE IF NOT EXISTS renting;
 USE renting;
 
+
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `rent_home`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `address`
+--
+
 CREATE TABLE `address` (
   `id_addr` int(11) NOT NULL,
   `province` varchar(50) NOT NULL,
@@ -117,10 +139,10 @@ CREATE TABLE `vote` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `voting`
+-- Cấu trúc bảng cho bảng `renter_vote`
 --
 
-CREATE TABLE `voting` (
+CREATE TABLE `renter_vote` (
   `id_vote` int(11) NOT NULL,
   `id_renter` int(11) NOT NULL,
   `visited_date` date NOT NULL
@@ -181,9 +203,9 @@ ALTER TABLE `vote`
   ADD KEY `id_home` (`id_home`);
 
 --
--- Chỉ mục cho bảng `voting`
+-- Chỉ mục cho bảng `renter_vote`
 --
-ALTER TABLE `voting`
+ALTER TABLE `renter_vote`
   ADD PRIMARY KEY (`id_vote`,`id_renter`),
   ADD KEY `id_renter` (`id_renter`);
 
@@ -258,11 +280,11 @@ ALTER TABLE `vote`
   ADD CONSTRAINT `vote_ibfk_1` FOREIGN KEY (`id_home`) REFERENCES `home` (`id_home`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `voting`
+-- Các ràng buộc cho bảng `renter_vote`
 --
-ALTER TABLE `voting`
-  ADD CONSTRAINT `voting_ibfk_1` FOREIGN KEY (`id_vote`) REFERENCES `vote` (`id_vote`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `voting_ibfk_2` FOREIGN KEY (`id_renter`) REFERENCES `renter` (`id_renter`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `renter_vote`
+  ADD CONSTRAINT `renter_vote_ibfk_1` FOREIGN KEY (`id_vote`) REFERENCES `vote` (`id_vote`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `renter_vote_ibfk_2` FOREIGN KEY (`id_renter`) REFERENCES `renter` (`id_renter`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
@@ -1166,8 +1188,7 @@ insert into vote(id_vote,review,voted_date,id_home,star) values
 (28,"Khong an ninh.","2019-8-19",78,3),
 (29,"Gia tot. Dien nuoc re.","2020-3-27",85,5);
 
-desc voting;
-insert into voting(id_vote,id_renter,visited_date) values
+insert into renter_vote(id_vote,id_renter,visited_date) values
 (1,61,"2020-2-21"),
 (2,38,"2019-7-26"),
 (3,43,"2020-5-25"),
@@ -1198,7 +1219,6 @@ insert into voting(id_vote,id_renter,visited_date) values
 (28,10,"2019-9-23"),
 (29,27,"2019-10-12");
 
-desc home_detail;
 insert into home_detail(id_detail,id_home) values
 (24,1),
 (11,2),
