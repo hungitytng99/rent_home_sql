@@ -1,4 +1,51 @@
--- nha co it nhat 2 phong ngu, 1 dieu hoa danh gia tren 3
+
+-- tat cac ca nha cho thue tai phuong kham thien
+select * from address where address.commune like "%Kham Thien%";
+
+-- nha o ha noi
+select host.name,host.phone, concat(province,"/",
+district,"/",commune,"/",street,"/",no_home) as 'Address of home'
+from  host,home,address
+where host.id_host = home.id_home
+and home.id_addr = address.id_addr
+and province like "%Ha Noi%";
+
+-- thong tin ve chu nha ma cho thue tat ca cac loai nha
+select host.name,host.phone
+from host,home,address
+where host.id_host = home.id_host
+group by(host.id_host)
+having count(distinct type) = (select count(distinct home.type) from home);
+select * from home;
+
+-- tat ca nhung nguoi danh gia nha co ma so 85, so sao ho danh gia
+select name,phone,star
+from renter,renter_vote,vote
+where renter.id_renter = renter_vote.id_renter
+and vote.id_vote = renter_vote.id_vote
+and vote.id_home = 85;
+
+-- chua cho thue, kham thien ha noi,
+select host.name,host.phone,fee,
+concat(province,"/",district,"/",commune,"/",street,"/",no_home) as 'Address of home'
+from host,home,address
+where host.id_host = home.id_host
+and home.id_addr = address.id_addr
+and province like "%ha Noi%"
+and commune like"%Kham Thien%"
+and home.status =1;
+
+-- 5 phong tro gia thap nhat tai hCM
+select host.name,host.phone,fee, concat(province,"/",
+district,"/",commune,"/",street,"/",no_home) as 'Address of home'
+from host,home,address
+where host.id_host = home.id_home
+and home.id_addr = address.id_addr
+and province like "%Ho Chi Minh%"
+and type = "Nha tro"
+order by(fee) limit 5;
+
+-- nha co it nhat 2 phong ngu, 1 dieu hoa, danh gia tren 3
 use rent_home;
 select host.name,host.phone, home1.fee,sum(star)/count(*) as star
 from host, home as home1 ,vote, home_detail,detail 
@@ -12,29 +59,7 @@ and (select sum(star)/count(*) from vote where home1.id_home = vote.id_home) >=3
 group by(home1.id_home);
 
 
--- tat cac ca nha cho thue tai phuong kham thien
-select * from address where address.commune like "%Kham Thien%";
-
--- nha o ha noi
-select host.name,host.phone, concat(province,"/",
-district,"/",commune,"/",street,"/",no_home) as 'Address of home'
-from  host,home,address
-where host.id_host = home.id_home
-and home.id_addr = address.id_addr
-and province like "%Ha Noi%";
-
--- 5 phong tro gia thap nhat tai hCM
-select host.name,host.phone,fee, concat(province,"/",
-district,"/",commune,"/",street,"/",no_home) as 'Address of home'
-from host,home,address
-where host.id_host = home.id_home
-and home.id_addr = address.id_addr
-and province like "%Ho Chi Minh%"
-and type = "Nha tro"
-order by(fee) limit 5;
-
--- chu nha va nha cung ow ha noi,van phong,,gia duoi 5 trieu
-
+-- chu nha va nha cung ow ha noi,van phong,gia duoi 5 trieu
 select host.name,host.phone,fee,
 concat(province,"/",
 district,"/",commune,"/",street,"/",no_home) as 'Address of home'
@@ -52,24 +77,7 @@ and province like "%ha Noi%")
 group by(home1.id_home)
 order by fee;
 
--- chua cho thue, kham thien ha noi,
-select host.name,host.phone,fee,
-concat(province,"/",district,"/",commune,"/",street,"/",no_home) as 'Address of home'
-from host,home,address
-where host.id_host = home.id_host
-and home.id_addr = address.id_addr
-and province like "%ha Noi%"
-and commune like"%Kham Thien%"
-and home.status =1;
-
--- tat ca nhung nguoi danh gia nha co ma so 85, so sao ho danh gia
-select name,phone,star
-from renter,renter_vote,vote
-where renter.id_renter = renter_vote.id_renter
-and vote.id_vote = renter_vote.id_vote
-and vote.id_home = 85;
-
--- biet thu, duoi 28tr,80 nguoi danh gia tren 4 sao, chua thue
+-- biet thu, duoi 28tr,80% nguoi danh gia tren 4 sao, chua cho thue
 select host.name,host.phone, home1.fee,sum(star)/count(*) as star
 from host, home as home1 ,vote, home_detail,detail 
 where host.id_host = home1.id_host 
@@ -97,11 +105,4 @@ select count(*) as 'Tong so nha da thue tai HN',@sum as 'tong nha chua thue tai 
 and address.province like ("%Ha Noi%");//
 delimiter ;
 
--- thong tin ve chu nha ma cho thue tat ca cac loai nha
-select host.name,host.phone
-from host,home,address
-where host.id_host = home.id_host
-group by(host.id_host)
-having count(distinct type) = (select count(distinct home.type) from home);
 
-select * from home;
