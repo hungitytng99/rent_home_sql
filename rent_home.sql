@@ -2730,7 +2730,7 @@ insert into address(id_addr,province,district,commune,street,no_home) values
 ("2500","Thanh pho Ho Chi Minh","Quan 1","Phuong Ben Thanh","Hoang Hoa Tham","490");
 
 insert into user(id_user,username,password,name,id_addr,phone,permission) values
-(1,'hungitytng99','admin2799','Tran Manh Hung',1999,'0981199350',1),
+(1,'hungitytng99','admin2799','Tran Manh Hung',1508,'0981199350',1),
 (2,'admin','trunghau','Nguyen Trung Hau',1132,'0144783567',1),
 (3,'HuyThanh24','hohuythanh9694','Ho Huy Thanh',2421,'0521573189',0),
 (4,'TrungHoang110','dinhtrunghoang7270','Dinh Trung Hoang',1646,'0983621133',0),
