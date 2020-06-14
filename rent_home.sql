@@ -19,6 +19,34 @@ SET time_zone = "+00:00";
 --
 -- Cấu trúc bảng cho bảng `address`
 --
+<<<<<<< HEAD
+=======
+DROP DATABASE IF EXISTS rent_home;
+CREATE DATABASE IF NOT EXISTS rent_home;
+USE rent_home;
+
+
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Cơ sở dữ liệu: `rent_home`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `address`
+--
+>>>>>>> f97198586e0acbe782264f67131800e16e2d2bda
 
 CREATE TABLE `address` (
   `id_addr` int(11) NOT NULL,
