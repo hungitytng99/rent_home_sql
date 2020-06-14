@@ -20,12 +20,16 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `rent_home`
 --
+DROP DATABASE IF EXISTS rent_home;
+CREATE DATABASE IF NOT EXISTS rent_home;
+USE rent_home;
 
 -- --------------------------------------------------------
 
 --
 -- Cấu trúc bảng cho bảng `address`
 --
+
 
 CREATE TABLE `address` (
   `id_addr` int(11) NOT NULL,
@@ -195,23 +199,26 @@ ALTER TABLE `vote`
 --
 ALTER TABLE `home`
   ADD CONSTRAINT `home_ibfk_1` FOREIGN KEY (`id_host`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `home_ibfk_2` FOREIGN KEY (`id_home`) REFERENCES `detail` (`id_home`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `home_ibfk_3` FOREIGN KEY (`id_addr`) REFERENCES `address` (`id_addr`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `detail`
+--
+ALTER TABLE `detail`
+  ADD CONSTRAINT `detail_ibfk_1` FOREIGN KEY (`id_home`) REFERENCES `home` (`id_home`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `renter_vote`
 --
 ALTER TABLE `renter_vote`
   ADD CONSTRAINT `renter_vote_ibfk_1` FOREIGN KEY (`id_vote`) REFERENCES `vote` (`id_vote`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `renter_vote_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `renter` (`id_renter`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `renter_vote_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_addr`) REFERENCES `address` (`id_addr`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `renter_vote` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
-
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_addr`) REFERENCES `address` (`id_addr`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Các ràng buộc cho bảng `vote`
 --
@@ -219,6 +226,4 @@ ALTER TABLE `vote`
   ADD CONSTRAINT `vote_ibfk_1` FOREIGN KEY (`id_home`) REFERENCES `home` (`id_home`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
