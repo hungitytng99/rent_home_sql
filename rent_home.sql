@@ -90,7 +90,7 @@ CREATE TABLE `renter_vote` (
 -- Cấu trúc bảng cho bảng `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `id_user` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -148,7 +148,7 @@ ALTER TABLE `renter_vote`
 --
 -- Chỉ mục cho bảng `user`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `account` (`username`),
   ADD KEY `id_host` (`id_user`),
@@ -197,7 +197,7 @@ ALTER TABLE `vote`
 -- Các ràng buộc cho bảng `home`
 --
 ALTER TABLE `home`
-  ADD CONSTRAINT `home_ibfk_1` FOREIGN KEY (`id_host`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `home_ibfk_1` FOREIGN KEY (`id_host`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `home_ibfk_3` FOREIGN KEY (`id_addr`) REFERENCES `address` (`id_addr`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -211,12 +211,12 @@ ALTER TABLE `detail`
 --
 ALTER TABLE `renter_vote`
   ADD CONSTRAINT `renter_vote_ibfk_1` FOREIGN KEY (`id_vote`) REFERENCES `vote` (`id_vote`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `renter_vote_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `renter_vote_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `user`
 --
-ALTER TABLE `user`
+ALTER TABLE `users`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_addr`) REFERENCES `address` (`id_addr`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- Các ràng buộc cho bảng `vote`
@@ -2729,7 +2729,7 @@ insert into address(id_addr,province,district,commune,street,no_home) values
 ("2499","Tinh Bac Ninh","Thanh pho Bac Ninh","Phuong Thi Cau","Tran Hung Dao","516"),
 ("2500","Thanh pho Ho Chi Minh","Quan 1","Phuong Ben Thanh","Hoang Hoa Tham","490");
 
-insert into user(id_user,username,password,name,id_addr,phone,permission) values
+insert into users(id_user,username,password,name,id_addr,phone,permission) values
 (1,'hungitytng99','admin2799','Tran Manh Hung',1508,'0981199350',1),
 (2,'admin','trunghau','Nguyen Trung Hau',1132,'0144783567',1),
 (3,'HuyThanh24','hohuythanh9694','Ho Huy Thanh',2421,'0521573189',0),
