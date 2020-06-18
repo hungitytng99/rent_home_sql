@@ -1,0 +1,34 @@
+1. Tìm tất cả nhà(loại nhà + địa chỉ) ở hà nội có giá thuê nhỏ hơn 5tr chưa cho thuê nhưng đầy đủ tiện nghi.
+	select type, concat(no_home,"/",street,"/",commune,"/",district,"/",province) as address from (detail natural join home) natural join address where fee < 5000000 and refrigator*washingmachine*air_conditional*tv*heater*bedroom*bathroom != 0 and province like "%Ha Noi" and status = 0;   
+2. Tìm các nhà cho thuê ở hà nội nhưng chủ lại ở các thành phố khác.
+	select type, concat(no_home,"/",street,"/",commune,"/",district,"/",province) from home natural join address where province like "%Ha Noi" and id_host not  in ( select id_user from users natural join address where province like "%Ha Noi");   
+3. Tìm admin cũng là chủ nhà( thêm số nnhà họ sở hữu)
+	select name, phone,count(id_home) as num_of_owner_home from users,home where id_home = id_user and permission = 1 group by id_host;
+	select name, phone,count(id_home) as num_of_owner_home from users,home where id_home = id_user and permission = 1 and id_user in (select id_host from home) group by id_host;
+4. Thông tin nhà(loai nha va gia) + thong tin chu nha (ten, sdt)có nhà có lượt được vote trong tháng trước có đánh giá trung bình trên 4 *
+	select type, fee, name, phone from users,home,vote where id_user = id_host and home.id_home = vote.id_home and star >=4 and MONTH(CURRENT_DATE()) - 1 = MONTH(voted_date) and YEAR(CURRENT_DATE()) = YEAR(voted_date);  
+5. Thông tin chủ nhà(tên + sdt) của nhà cho thuê của nhà có đánh giá trung bình trên 4 sao và chưa cho thuê
+	select name, phone from users, home, vote where users.id_user = home.id_host and home.id_home = vote.id_home and home.status = 0 group by home.id_home having avg(star) >= 4;  
+6. 3 chủ nhà cho thuê nhà trọ với giá cao nhất tại hà nội
+	select name, phone from users,home,address where id_host = id_user and users.id_addr = address.id_addr and province like "%Ha Noi" and type= "Nha tro" order by home.fee desc limit 3; 
+7. thông tin chi tiết về số lượng đánh giá của users đã từng đánh giá 
+	select users.*, count(*) as num_of_vote from users natural join renter_vote  group by id_user;
+8. thông tin về thành phố có giá trung bình thuê các loại nhà cao nhất 
+	select province from home natural join address group by province having avg(fee) >= all ( select avg(fee) from home natural join address group by province); 
+9.(*) các nhà(loại nhà + giá) có cùng phường với người thuê nhà có ID = "33";
+	select type, fee from home natural join address addr1 where concat(province,"/",district,"/",commune) = ( select concat(province,"/",district,"/",commune) from users natural join address addr2 where id_user = 33); 
+10. đếm tổng số nhà chưa được đánh giá nhưng giá nhỏ hơn 3 triệu và là Nhà trọ ở quận Thanh xuân - HN
+	 select count(*) from home natural join address where fee < 3000000 and type = "Nha tro" and province like "%Ha Noi" and district like "%Thanh xuan" and id_home not in ( select id_home from vote);
+11. căn nhà có lượt đánh giá nhiều nhất và số sao trung bình
+	select type, fee,avg(star) as avg_star from home natural join vote group by id_home having count(id_vote) >= all( select count(*) from vote group by id_home); 
+12. hiển thị ngẫu nhiên 1 căn nhà có giá thấp hơn 1tr5 triệu và chưa cho thuê , chưa có lượt đánh giá nào
+	select type, fee from home where fee < 1500000 and status = 0 and id_home not in ( select distinct id_home from vote) group by rand() limit 1; 
+13. hiển thị ngẫu nhiên 3 căn nhà chưa cho thuê, thông tin chủ nhà mà người thuê có mã "48" có thể thuê được và cùng xã/phường( người 44 thuê được căn nhà dưới 10 triệu)
+	select type,fee,name,phone from home,users,address where home.id_host = users.id_user and home.id_addr = address.id_addr and fee<10000000 and concat(province,district,commune) in (select concat(province,district,commune) from users natural join address where id_user = 48) and status = 0 group by rand() limit 3;     
+14.các nhà(loại nhà + giá) có cùng địa chỉ với người thuê nhà có ID = "33";
+select type, fee from home natural join address addr1 where id_addr = ( select id_addr from users natural join address addr2 where id_user = 33);  
+15. tìm người đã đánh giá tất cả cá căn nhà ở quận thanh xuân
+
+16. Tỷ lệ của nhà có đủ tiện nghi nhưng chưa cho thuê với nhà có đủ tiện nghi nhưng đã cho thuê theo từng loại nhà.
+
+17. Tài khoản đánh giá 1 sao mà không nhập bình luận trong tháng 4 năm nay
